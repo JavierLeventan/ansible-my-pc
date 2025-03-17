@@ -1,0 +1,22 @@
+---
+- name: Configure my PC
+  hosts: localhost
+  roles:
+    - arch_config
+  tasks:
+    - name: install packages
+      become: true
+      ansible.builtin.package:
+        name:
+          - base-devel
+          - discord
+          - code
+          - haruna
+          - libreoffice-still
+          - libreoffice-still-es
+          - timeshift
+          - git
+          - python-pip
+          - python-virtualenv
+          - keepassxc
+        state: present

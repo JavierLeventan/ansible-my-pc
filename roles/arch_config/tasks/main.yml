@@ -1,0 +1,9 @@
+---
+- name: Import makepkg.yml
+  ansible.builtin.import_tasks: makepkg.yml
+
+- name: Import aur_config
+  ansible.builtin.import_tasks: aur_config.yml
+
+- name: Import configure_pacman
+  ansible.builtin.import_tasks: configure_pacman.yml

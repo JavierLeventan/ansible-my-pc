@@ -1,0 +1,22 @@
+---
+- name: aur_config | Create ansible AUR user
+  become: true
+  ansible.builtin.user:
+    name: "{{ arch_config_ansible_aur_user }}"
+    state: present
+    create_home: true
+
+- name: aur_config | Configure ansible AUR user
+  become: true
+  community.general.sudoers:
+    name: "11-{{ arch_config_ansible_aur_user }}-allow-to-sudo-pacman"
+    state: present
+    user: "{{ arch_config_ansible_aur_user }}"
+    runas: ALL
+    nopassword: true
+    commands: /usr/bin/pacman
+
+- name: aur_config | Install paru
+  kewlfft.aur.aur:
+    name: paru
+    state: present
