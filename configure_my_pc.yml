@@ -15,10 +15,12 @@
       loop:
         - { regexp: "^#[multilib]", line: "[multilib]" }
         - { regexp: "^#Include = /etc/pacman.d/mirrorlist", line: "Include = /etc/pacman.d/mirrorlist"}
+      notify:
+        - Update Pacman cache
 
     - name: Install packages
       become: true
-      ansible.builtin.package:
+      community.general.pacman:
         name:
           - base-devel
           - discord
@@ -48,3 +50,8 @@
           - stremio
           - syncthingtray-qt6
         state: present
+
+  handlers:
+    - name: Update Pacman cache
+      community.general.pacman:
+        update_cache: true
