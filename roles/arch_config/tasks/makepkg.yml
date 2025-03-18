@@ -15,9 +15,9 @@
   loop:
     - { regexp: '^(OPTIONS=.*) debug(.*)$', replace: '\1 !debug\2' }
     - { regexp: '^(OPTIONS=.*) lto(.*)$', replace: '\1 !lto\2' }
-    - { regexp: '^(CFLAGS=[\s\S]*.*)-march ([\s\S]*.*\")$', replace: '\1-march=native \2' }
-    - { regexp: '^(CFLAGS=[\s\S]*.*)-mtune([\s\S]*.*\")', replace: '\1\2' }
-    - { regexp: '(^LDFLAGS=[\s\S]*.*)pack-relative-relocs"', replace: '\1pack-relative-relocs,-fuse-ld=mold"' }
+    - { regexp: '^(CFLAGS=[\s\S]*)-march=\S*\s([\s\S]*\")$', replace: '\1-march=native \2' }
+    - { regexp: '^(CFLAGS=[\s\S]*)-mtune=\S*\s([\s\S]*\")', replace: '\1\2' }
+    - { regexp: '(^LDFLAGS=[\s\S]*)pack-relative-relocs"', replace: '\1pack-relative-relocs,-fuse-ld=mold"' }
 
 - name: makepkg | Gcc compiler optimizatiosn replace line
   become: true
