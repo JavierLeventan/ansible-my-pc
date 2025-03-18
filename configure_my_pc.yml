@@ -10,12 +10,13 @@
       become: true
       ansible.builtin.lineinfile:
         path: /etc/pacman.conf
+        insertafter: "{{ item.insertafter }}"
         regexp: "{{ item.regexp }}"
         line: "{{ item.line }}"
       notify: Update Pacman cache
       loop:
-        - { regexp: "^#\\[multilib\\]", line: "[multilib]" }
-        - { regexp: "^#Include = /etc/pacman.d/mirrorlist", line: "Include = /etc/pacman.d/mirrorlist"}
+        - { regexp: "^#\\[multilib\\]", line: "[multilib]", insertafter: "" }
+        - { regexp: "^#Include = /etc/pacman.d/mirrorlist", line: "Include = /etc/pacman.d/mirrorlist", insertafter: "[multilib]"}
 
     - name: Force handlers execution
       ansible.builtin.meta: flush_handlers
