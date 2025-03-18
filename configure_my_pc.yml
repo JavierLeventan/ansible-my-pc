@@ -12,11 +12,13 @@
         path: /etc/pacman.conf
         regexp: "{{ item.regexp }}"
         line: "{{ item.line }}"
+      notify: Update Pacman cache
       loop:
-        - { regexp: "^#[multilib]", line: "[multilib]" }
+        - { regexp: "^#\\[multilib\\]", line: "[multilib]" }
         - { regexp: "^#Include = /etc/pacman.d/mirrorlist", line: "Include = /etc/pacman.d/mirrorlist"}
-      notify:
-        - Update Pacman cache
+
+    - name: Force handlers execution
+      ansible.builtin.meta: flush_handlers
 
     - name: Install packages
       become: true
@@ -26,8 +28,8 @@
           - discord
           - code
           - haruna
-          - libreoffice-still
-          - libreoffice-still-es
+          - libreoffice-fresh
+          - libreoffice-fresh-es
           - timeshift
           - git
           - python-pip
@@ -53,5 +55,6 @@
 
   handlers:
     - name: Update Pacman cache
+      become: true
       community.general.pacman:
         update_cache: true
