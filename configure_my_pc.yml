@@ -6,7 +6,7 @@
   roles:
     - arch_config
   tasks:
-    - name: Enable blockinfile
+    - name: Enable multilib
       become: true
       ansible.builtin.replace:
         path: /etc/pacman.conf
