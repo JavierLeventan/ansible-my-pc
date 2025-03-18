@@ -6,17 +6,13 @@
   roles:
     - arch_config
   tasks:
-    - name: Enable multilib
+    - name: Enable blockinfile
       become: true
-      ansible.builtin.lineinfile:
+      ansible.builtin.replace:
         path: /etc/pacman.conf
-        insertafter: "{{ item.insertafter }}"
-        regexp: "{{ item.regexp }}"
-        line: "{{ item.line }}"
+        regexp: "^#\\[multilib\\]\n#Include = /etc/pacman.d/mirrorlist$"
+        replace: "[multilib]\nInclude = /etc/pacman.d/mirrorlist"
       notify: Update Pacman cache
-      loop:
-        - { regexp: "^#\\[multilib\\]", line: "[multilib]", insertafter: "" }
-        - { regexp: "^#Include = /etc/pacman.d/mirrorlist", line: "Include = /etc/pacman.d/mirrorlist", insertafter: "[multilib]"}
 
     - name: Force handlers execution
       ansible.builtin.meta: flush_handlers
@@ -28,6 +24,7 @@
           - base-devel
           - discord
           - code
+          - qt6-multimedia-ffmpeg
           - haruna
           - libreoffice-fresh
           - libreoffice-fresh-es
@@ -39,7 +36,6 @@
           - kdeconnect
           - syncthing
           - obsidian
-          - steam
         state: present
 
     - name: Install aur packages
