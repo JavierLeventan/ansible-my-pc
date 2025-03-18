@@ -1,5 +1,6 @@
 ansible
 ansible-core
+ansible-lint
 cffi
 cryptography
 Jinja2
