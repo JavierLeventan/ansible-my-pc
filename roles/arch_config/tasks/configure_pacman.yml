@@ -1,4 +1,11 @@
 ---
+- name: configure_pacman | Enable color
+  become: true
+  ansible.builtin.replace:
+    path: /etc/pacman.conf
+    regexp: '^#Color'
+    replace: 'Color'
+
 - name: configure_pacman | Create hooks directory
   become: true
   ansible.builtin.file:
@@ -10,5 +17,5 @@
   become: true
   ansible.builtin.copy:
     src: files/clean_cache.hook
-    dest: /etc/pacman.d/hooks/clean_cache.hook
+    dest: /etc/pacman.d/hooks/clean_cache_paccache.hook
     mode: '0644'

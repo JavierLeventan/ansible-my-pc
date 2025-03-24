@@ -1,11 +1,11 @@
 [Trigger]
-Operation = Remove
-Operation = Install
 Operation = Upgrade
+Operation = Install
+Operation = Remove
 Type = Package
 Target = *
 
 [Action]
-Description = Keep the last cache and the currently installed; clear cache for unused packages
+Description = Cleaning pacman cache...
 When = PostTransaction
-Exec = /usr/bin/paccache -rvuk0 && /usr/bin/paccache -rvk2
+Exec = /usr/bin/paccache -r
