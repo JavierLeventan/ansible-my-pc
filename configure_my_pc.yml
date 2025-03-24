@@ -3,6 +3,7 @@
   hosts: localhost
   vars:
     arch_config_ansible_aur_user: aur_builder
+    arch_config_install_timeshift: true
   roles:
     - arch_config
   tasks:

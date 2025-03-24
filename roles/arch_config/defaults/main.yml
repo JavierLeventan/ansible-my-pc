@@ -1,2 +1,3 @@
 ---
+arch_config_install_timeshift: false
 arch_config_ansible_aur_user: aur_builder

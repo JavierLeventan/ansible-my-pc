@@ -6,4 +6,10 @@
   ansible.builtin.import_tasks: aur_config.yml
 
 - name: Import configure_pacman
+  tags: pacman
   ansible.builtin.import_tasks: configure_pacman.yml
+
+- name: Import timeshift
+  tags: timeshift
+  ansible.builtin.import_tasks: timeshift.yml
+  when: arch_config_install_timeshift
