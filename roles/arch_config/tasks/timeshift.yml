@@ -28,12 +28,12 @@
           - inotify-tools
         state: present
 
-    - name: timeshift | Configure grub-btrfsd.service
-      ansible.builtin.replace:
-        path: /etc/systemd/system/grub-btrfsd.service
-        regexp: '^ExecStart=/usr/bin/grub-btrfsd --syslog /.*$'
-        replace: 'ExecStart=/usr/bin/grub-btrfsd --syslog -t'
-        backup: true
+    - name: timeshift | Create grub-btrfsd.service
+      become: true
+      ansible.builtin.template:
+        src: grub-btrfsd.service.j2
+        dest: /etc/systemd/system/grub-btrfsd.service
+        mode: "0644"
       notify: Enable grub-btrfsd.service
 
     - name: timeshift | Run timeshift at boot with cron
