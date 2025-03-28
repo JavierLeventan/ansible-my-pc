@@ -29,12 +29,12 @@
           - haruna
           - libreoffice-fresh
           - libreoffice-fresh-es
+          - hunspell-es_ar
           - timeshift
           - git
           - python-pip
           - python-virtualenv
           - keepassxc
-          - kdeconnect
           - syncthing
           - obsidian
         state: present
