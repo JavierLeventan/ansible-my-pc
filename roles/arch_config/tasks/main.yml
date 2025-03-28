@@ -1,4 +1,10 @@
 ---
+- name: Install required packages
+  become: true
+  ansible.builtin.package:
+    name: pacman-contrib
+    state: present
+
 - name: Import makepkg.yml
   ansible.builtin.import_tasks: makepkg.yml
 
@@ -13,3 +19,10 @@
   tags: timeshift
   ansible.builtin.import_tasks: timeshift.yml
   when: arch_config_install_timeshift
+
+- name: Create vi symlink
+  become: true
+  ansible.builtin.file:
+    src: /usr/bin/vim
+    dest: /usr/bin/vi
+    state: link
