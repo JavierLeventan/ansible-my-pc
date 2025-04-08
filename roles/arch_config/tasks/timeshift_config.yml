@@ -1,26 +1,26 @@
 ---
-- name: timeshift | Install timeshift
+- name: timeshift_config | Install timeshift
   become: true
   ansible.builtin.package:
     name: timeshift
     state: present
 
-- name: timeshift | Check if grub is installed
+- name: timeshift_config | Check if grub is installed
   ansible.builtin.package:
     name: grub
     state: present
   check_mode: true
   register: grub_is_installable
 
-- name: timeshift | Check if @ is created in the BTRFS system
+- name: timeshift_config | Check if @ is created in the BTRFS system
   become: true
   community.general.btrfs_info:
   register: btrfs_info
 
-- name: timeshift | Configure grub
+- name: timeshift_config | Configure grub
   when: not grub_is_installable.changed and (btrfs_info.filesystems[0].subvolumes | selectattr("path", "equalto", "/@"))
   block:
-    - name: timeshift | Install grub-btrfs and notify-tools
+    - name: timeshift_config | Install grub-btrfs and notify-tools
       become: true
       ansible.builtin.package:
         name:
@@ -28,7 +28,7 @@
           - inotify-tools
         state: present
 
-    - name: timeshift | Create grub-btrfsd.service
+    - name: timeshift_config | Create grub-btrfsd.service
       become: true
       ansible.builtin.template:
         src: grub-btrfsd.service.j2
@@ -36,7 +36,7 @@
         mode: "0644"
       notify: Enable grub-btrfsd.service
 
-    - name: timeshift | Run timeshift at boot with cron
+    - name: timeshift_config | Run timeshift at boot with cron
       become: true
       ansible.builtin.cron:
         name: "run timeshift at boot"

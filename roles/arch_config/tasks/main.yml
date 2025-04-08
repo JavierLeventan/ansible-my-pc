@@ -1,23 +1,27 @@
 ---
-- name: Install required packages
-  become: true
-  ansible.builtin.package:
-    name: pacman-contrib
-    state: present
+- name: Install collection kewlfft.aur
+  community.general.ansible_galaxy_install:
+    type: collection
+    name: kewlfft.aur
 
-- name: Import makepkg.yml
-  ansible.builtin.import_tasks: makepkg.yml
+- name: GCC build optimizations
+  ansible.builtin.import_tasks: makepkg_config.yml
 
-- name: Import aur_config
-  ansible.builtin.import_tasks: aur_config.yml
-
-- name: Import configure_pacman
+- name: Configure pacman
   tags: pacman
-  ansible.builtin.import_tasks: configure_pacman.yml
+  ansible.builtin.import_tasks: pacman_config.yml
 
-- name: Import timeshift
+- name: Configure aur
+  tags: aur
+  ansible.builtin.include_tasks: aur_config.yml
+
+- name: Install packages
+  tags: install_packages
+  ansible.builtin.include_tasks: install_packages.yml
+
+- name: Configure timeshift
   tags: timeshift
-  ansible.builtin.import_tasks: timeshift.yml
+  ansible.builtin.import_tasks: timeshift_config.yml
   when: arch_config_install_timeshift
 
 - name: Create vi symlink

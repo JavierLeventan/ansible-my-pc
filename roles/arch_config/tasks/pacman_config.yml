@@ -1,0 +1,35 @@
+---
+- name: pacman_config | Install required pacman-contrib
+  become: true
+  ansible.builtin.package:
+    name: pacman-contrib
+    state: present
+
+- name: pacman_config | Enable color
+  become: true
+  ansible.builtin.replace:
+    path: /etc/pacman.conf
+    regexp: '^#Color'
+    replace: 'Color'
+
+- name: pacman_config | Enable multilib
+  become: true
+  ansible.builtin.replace:
+    path: /etc/pacman.conf
+    regexp: "^#\\[multilib\\]\n#Include = /etc/pacman.d/mirrorlist$"
+    replace: "[multilib]\nInclude = /etc/pacman.d/mirrorlist"
+  notify: Update Pacman cache
+
+- name: pacman_config | Create hooks directory
+  become: true
+  ansible.builtin.file:
+    name: /etc/pacman.d/hooks
+    state: directory
+    mode: '0644'
+
+- name: pacman_config | Clean cache when doing pacman update
+  become: true
+  ansible.builtin.copy:
+    src: files/clean_cache.hook
+    dest: /etc/pacman.d/hooks/clean_cache_paccache.hook
+    mode: '0644'

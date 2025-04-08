@@ -1,4 +1,9 @@
 ---
+- name: Update Pacman cache
+  become: true
+  community.general.pacman:
+    update_cache: true
+
 - name: Enable grub-btrfsd.service
   become: true
   ansible.builtin.systemd_service:

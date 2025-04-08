@@ -15,12 +15,3 @@
     runas: ALL
     nopassword: true
     commands: /usr/bin/pacman
-
-- name: aur_config | Install paru
-  become: true
-  become_user: "{{ arch_config_ansible_aur_user }}"
-  vars:
-    ansible_python_interpreter: /usr/bin/python
-  kewlfft.aur.aur:
-    name: paru
-    state: present

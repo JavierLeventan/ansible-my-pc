@@ -1,11 +1,11 @@
 ---
-- name: makepkg | Install mold
+- name: makepkg_config | Install mold
   become: true
   ansible.builtin.package:
     name: mold
     state: present
 
-- name: makepkg | Gcc compiler optimizations replace words
+- name: makepkg_config | Gcc compiler optimizations replace words
   become: true
   ansible.builtin.replace:
     path: /etc/makepkg.conf
@@ -19,7 +19,7 @@
     - { regexp: '^(CFLAGS=[\s\S]*)-mtune=\S*\s([\s\S]*\")', replace: '\1\2' }
     - { regexp: '(^LDFLAGS=[\s\S]*)pack-relative-relocs"', replace: '\1pack-relative-relocs,-fuse-ld=mold"' }
 
-- name: makepkg | Gcc compiler optimizatiosn replace line
+- name: makepkg_config | Gcc compiler optimizatiosn replace line
   become: true
   ansible.builtin.lineinfile:
     path: /etc/makepkg.conf
@@ -30,7 +30,7 @@
     - { regexp: '^MAKEFLAGS=', replace: 'MAKEFLAGS="-j$(nproc)"' }
     - { regexp: '^PKGEXT=', replace: "PKGEXT='.pkg.tar'" }
 
-- name: makepkg | Rust compiler optimizations
+- name: makepkg_config | Rust compiler optimizations
   become: true
   ansible.builtin.lineinfile:
     path: /etc/makepkg.conf.d/rust.conf
