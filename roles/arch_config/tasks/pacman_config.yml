@@ -9,8 +9,8 @@
   become: true
   ansible.builtin.replace:
     path: /etc/pacman.conf
-    regexp: '^#Color'
-    replace: 'Color'
+    regexp: "^#Color"
+    replace: "Color"
 
 - name: pacman_config | Enable multilib
   become: true
@@ -25,11 +25,11 @@
   ansible.builtin.file:
     name: /etc/pacman.d/hooks
     state: directory
-    mode: '0644'
+    mode: "0644"
 
 - name: pacman_config | Clean cache when doing pacman update
   become: true
   ansible.builtin.copy:
     src: files/clean_cache.hook
     dest: /etc/pacman.d/hooks/clean_cache_paccache.hook
-    mode: '0644'
+    mode: "0644"

@@ -18,6 +18,7 @@
       - keepassxc
       - syncthing
       - obsidian
+      - zram-generator
     state: present
 
 - name: install_packages | Install aur packages

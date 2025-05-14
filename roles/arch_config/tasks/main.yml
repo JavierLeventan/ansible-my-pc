@@ -19,6 +19,10 @@
   tags: install_packages
   ansible.builtin.include_tasks: install_packages.yml
 
+- name: Configure Zram
+  tags: zram
+  ansible.builtin.import_tasks: zram_config.yml
+
 - name: Configure timeshift
   tags: timeshift
   ansible.builtin.import_tasks: timeshift_config.yml

@@ -1,0 +1,32 @@
+---
+- name: Create zram-generator.conf
+  become: true
+  ansible.builtin.template:
+    src: zram-generator.conf.j2
+    dest: /etc/systemd/zram-generator.conf
+    mode: "0644"
+  notify: Enable zram-generator
+
+- name: Optimize zram
+  become: true
+  ansible.builtin.template:
+    src: 99-vm-zram-parameters.conf.j2
+    dest: /etc/sysctl.d/99-vm-zram-parameters.conf
+    mode: "0644"
+
+- name: Toggle zswap
+  become: true
+  ansible.builtin.lineinfile:
+    backrefs: true
+    path: /sys/module/zswap/parameters/enabled
+    regexp: ^[1Y]
+    line: 0
+
+- name: Disable zswap
+  become: true
+  ansible.builtin.lineinfile:
+    backrefs: true
+    path: /etc/default/grub
+    regexp: '^(GRUB_CMDLINE_LINUX_DEFAULT=.*)zswap.enabled=1(.*"$)'
+    line: \1zswap.enabled=0\2
+    backup: true
