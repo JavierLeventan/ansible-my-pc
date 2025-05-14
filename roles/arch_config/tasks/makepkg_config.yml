@@ -13,11 +13,11 @@
     replace: "{{ item.replace }}"
     backup: true
   loop:
-    - { regexp: '^(OPTIONS=.*) debug(.*)$', replace: '\1 !debug\2' }
-    - { regexp: '^(OPTIONS=.*) lto(.*)$', replace: '\1 !lto\2' }
-    - { regexp: '^(CFLAGS=[\s\S]*)-march=\S*\s([\s\S]*\")$', replace: '\1-march=native \2' }
-    - { regexp: '^(CFLAGS=[\s\S]*)-mtune=\S*\s([\s\S]*\")', replace: '\1\2' }
-    - { regexp: '(^LDFLAGS=[\s\S]*)pack-relative-relocs"', replace: '\1pack-relative-relocs,-fuse-ld=mold"' }
+    - { regexp: "^(OPTIONS=.*) debug(.*)$", replace: "\\1 !debug\\2" }
+    - { regexp: "^(OPTIONS=.*) lto(.*)$", replace: "\\1 !lto\\2" }
+    - { regexp: '^(CFLAGS=[\s\S]*)-march=\S*\s([\s\S]*\")$', replace: "\\1-march=native \\2" }
+    - { regexp: '^(CFLAGS=[\s\S]*)-mtune=\S*\s([\s\S]*\")', replace: "\\1\\2" }
+    - { regexp: '^(LDFLAGS=[\s\S]*)pack-relative-relocs"', replace: '\1pack-relative-relocs,-fuse-ld=mold"' }
 
 - name: makepkg_config | Gcc compiler optimizatiosn replace line
   become: true
@@ -27,8 +27,8 @@
     line: "{{ item.replace }}"
     backup: true
   loop:
-    - { regexp: '^MAKEFLAGS=', replace: 'MAKEFLAGS="-j$(nproc)"' }
-    - { regexp: '^PKGEXT=', replace: "PKGEXT='.pkg.tar'" }
+    - { regexp: "^MAKEFLAGS=", replace: 'MAKEFLAGS="-j$(nproc)"' }
+    - { regexp: "^PKGEXT=", replace: "PKGEXT='.pkg.tar'" }
 
 - name: makepkg_config | Rust compiler optimizations
   become: true

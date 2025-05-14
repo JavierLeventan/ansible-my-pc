@@ -8,5 +8,12 @@
   become: true
   ansible.builtin.systemd_service:
     name: grub-btrfsd.service
-    state: reloaded
+    state: started
+    enabled: true
+
+- name: Enable zram-generator
+  become: true
+  ansible.builtin.systemd_service:
+    name: systemd-zram-setup@zram0.service
+    state: started
     enabled: true
