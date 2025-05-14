@@ -13,8 +13,9 @@
     src: 99-vm-zram-parameters.conf.j2
     dest: /etc/sysctl.d/99-vm-zram-parameters.conf
     mode: "0644"
+  notify: Enable zram-generator
 
-- name: Toggle zswap
+- name: Turn off zswap
   become: true
   ansible.builtin.lineinfile:
     backrefs: true
