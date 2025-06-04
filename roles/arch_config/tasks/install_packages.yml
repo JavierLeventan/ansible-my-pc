@@ -31,5 +31,4 @@
       - paru
       - zen-browser-bin
       - stremio
-      - syncthingtray-qt6
     state: present
