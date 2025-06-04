@@ -34,3 +34,10 @@
     src: /usr/bin/vim
     dest: /usr/bin/vi
     state: link
+
+- name: Create ntsync module file
+  become: true
+  ansible.builtin.copy:
+    dest: "/etc/modules-load.d/ntsync.conf"
+    mode: "0644"
+    content: ntsync
