@@ -1,3 +1,10 @@
 ---
 arch_config_install_timeshift: false
 arch_config_ansible_aur_user: aur_builder
+
+arch_config_reflector_save: /etc/pacman.d/mirrorlist
+arch_config_reflector_countries: Brazil,Chile,US
+arch_config_reflector_age: 12
+arch_config_reflector_protocol: https
+arch_config_reflector_sort: rate
+arch_config_reflector_threads: 4

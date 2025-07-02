@@ -17,3 +17,10 @@
     name: systemd-zram-setup@zram0.service
     state: started
     enabled: true
+
+- name: Enable reflector
+  become: true
+  ansible.builtin.systemd_service:
+    name: reflector.timer
+    state: started
+    enabled: true

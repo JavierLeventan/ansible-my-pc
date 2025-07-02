@@ -9,6 +9,7 @@
 
 - name: Configure pacman
   tags: pacman
+  become: true
   ansible.builtin.import_tasks: pacman_config.yml
 
 - name: Configure aur
